@@ -83,8 +83,8 @@ add_filter( 'woocommerce_thankyou_order_received_text', 'wfcm_wa_thankyou', 10, 
 function wfcm_wa_thankyou($title, $order) {
 	$data =[];
 	$shipping_data =[];
-	$judul = 'Thank you for your order.';
-    $subtitle = 'Complete your checkout by pressing the Order by WA button below so that the order can be processed by the Seller.';
+	$judul = 'Gracias por su orden.';
+    $subtitle = 'Complete el pedido presionando el botón de Whatsapp para hablar directamente con el proveedor.';
 	
 	$mode = ($order->get_billing_address_1() != $order->get_shipping_address_1() || $order->get_billing_first_name() != $order->get_shipping_first_name())?'shipping':'billing';
 	//$mode = 'shipping'; //force shipping mode
@@ -145,35 +145,20 @@ function wfcm_wa_thankyou($title, $order) {
 	//Loop each checkout vendors whatsapp button
 	$html ='';
 	foreach($data as $vendor_id=>$d){
-		$msg = "*Hello, here's my order details:*\n";
+		$msg = "*Hola, esto es lo que quiero:*\n";
     	$msg .= $d['items']."\n";
-    	$msg .="*Order Id*: ".$order->get_id()."\n";
     	$msg .="*Total Price*: ".strip_tags(wc_price($d['total']))."\n";
-    	$msg .="*Payment Method*: ".$order->get_payment_method_title()."\n";
     	if(isset($shipping_data[$vendor_id])){
     		$msg .="*Shipping Method*: ".$shipping_data[$vendor_id]['title']." ".strip_tags(wc_price($shipping_data[$vendor_id]['total']))."\n\n";
     	}elseif(isset($shipping_data[0])){
     		$msg .="*Shipping Method*: ".$shipping_data[0]['title']." ". strip_tags(wc_price($shipping_data[0]['total']))."\n\n";
     	}
     	
-    	$msg .="*Shipping Info*: \n";
-    	$msg .="Name: ".$order->{"get_".$mode."_first_name"}()." ".$order->{"get_".$mode."_last_name"}()."\n";
-    	$msg .="Address: ".implode(', ',[$order->{"get_".$mode."_address_1"}(),$order->{"get_".$mode."_address_2"}()])."\n";
-    	$msg .="City: ".$order->{"get_".$mode."_city"}().", ".$province.", ".$country."\n";
-    	$msg .="Zip Code: ".$order->{"get_".$mode."_postcode"}()."\n";
-    	if($mode=='shipping'){
-    		$email = (isset($order->shipping['email']))?$order->shipping['email']:$order->get_billing_email();
-    		$phone = (isset($order->shipping['phone']))?$order->shipping['phone']:$order->get_billing_phone();
-    	}else{
-    		$email = $order->get_billing_email();
-    		$phone = $order->get_billing_phone();
-    	}
     	$msg .="Email: ".$email."\n";
     	$msg .="Phone Number: ".$phone."\n";
     	$msg .= "Notes: ".$order->get_customer_note()."\n";
     	$msg .="\n";
-    	$msg .="Thank you!\n\n";
-    	$msg .= "Server Time: ".get_post_time( 'j-F-Y - H:i', false, $order->get_id(), true );
+    	$msg .="Gracias!\n\n";
     	$btn_text ='Send Order by WA to: '.$d['vendor_name'];
     	$html .=  '<a id="sendbtn" href="https://api.whatsapp.com/send?phone='.$d['whatsapp'].'&text='.rawurlencode($msg).'" target="_blank" class="wa-order-thankyou">'.$btn_text.'</a><br>';
 	}
