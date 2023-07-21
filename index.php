@@ -148,15 +148,17 @@ function wfcm_wa_thankyou($title, $order) {
 		$msg = "*Hola, me gustaría comprar esto:*\n";
 	$msg .="\n";
     	$msg .= $d['items']."\n";
-    	$msg .="*Total Price*: ".strip_tags(wc_price($d['total']))."\n";
+    	$msg .="*Total Price*: ".wc_price($d['total'])."\n";
     	if(isset($shipping_data[$vendor_id])){
     		$msg .="*Shipping Method*: ".$shipping_data[$vendor_id]['title']." ".strip_tags(wc_price($shipping_data[$vendor_id]['total']))."\n\n";
     	}elseif(isset($shipping_data[0])){
     		$msg .="*Shipping Method*: ".$shipping_data[0]['title']." ". strip_tags(wc_price($shipping_data[0]['total']))."\n\n";
     	}
-    	
+		
     	$msg .="\n";
-    	$msg .="Gracias!\n\n";
+    	$msg .="Gracias!\n";
+
+		
     	$btn_text ='Ir con '.$d['vendor_name'];
     	$html .=  '<a id="sendbtn" href="https://api.whatsapp.com/send?phone='.$d['whatsapp'].'&text='.rawurlencode($msg).'" target="_blank" class="wa-order-thankyou">'.$btn_text.'</a><br>';
 	}
