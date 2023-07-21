@@ -156,7 +156,7 @@ function wfcm_wa_thankyou($title, $order) {
     	}
 		
     	$msg .="\n";
-    	$msg .="Gracias!\n";
+    	$msg .="Gracias!";
 
 		
     	$btn_text ='Ir con '.$d['vendor_name'];
