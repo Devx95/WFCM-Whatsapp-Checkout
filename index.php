@@ -156,21 +156,24 @@ function wfcm_wa_thankyou($title, $order) {
     		$msg .="*Shipping Method*: ".$shipping_data[0]['title']." ". strip_tags(wc_price($shipping_data[0]['total']))."\n\n";
     	}
     	
-    	$msg .="*Shipping Info*: \n";
-    	$msg .="Name: ".$order->{"get_".$mode."_first_name"}()." ".$order->{"get_".$mode."_last_name"}()."\n";
+    	$msg .="*Info del comprador*: \n";
+    	
     	if($mode=='shipping'){
+		$name = (isset($order->shipping['name']))?$order->shipping['name']:$order->get_billing_name();
     		$email = (isset($order->shipping['email']))?$order->shipping['email']:$order->get_billing_email();
     		$phone = (isset($order->shipping['phone']))?$order->shipping['phone']:$order->get_billing_phone();
     	}else{
+		$name = $order->get_billing_name();
     		$email = $order->get_billing_email();
     		$phone = $order->get_billing_phone();
     	}
+	$msg .="Name: ".$name."\n";
     	$msg .="Email: ".$email."\n";
     	$msg .="Phone Number: ".$phone."\n";
     	$msg .="\n";
-    	$msg .="Thank you!\n\n";
-    	$msg .= "Server Time: ".get_post_time( 'j-F-Y - H:i', false, $order->get_id(), true );
-    	$btn_text ='Send Order by WA to: '.$d['vendor_name'];
+    	$msg .="Gracias!\n\n";
+    	
+    	$btn_text ='Enviar orden a '.$d['vendor_name'];
     	$html .=  '<a id="sendbtn" href="https://api.whatsapp.com/send?phone='.$d['whatsapp'].'&text='.rawurlencode($msg).'" target="_blank" class="wa-order-thankyou">'.$btn_text.'</a><br>';
 	}
 
