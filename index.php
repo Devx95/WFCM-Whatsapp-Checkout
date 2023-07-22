@@ -146,11 +146,10 @@ function wfcm_wa_thankyou($title, $order) {
 	//Loop each checkout vendors whatsapp button
 	$html ='';
 	foreach($data as $vendor_id=>$d){
-		$msg = "*Hola, me gustaría comprar:*\n";
+		$msg = "*Hola, me gustaría comprar:*\n\n";
     	$msg .= $d['items']."\n";
-    	$msg .="*Order Id*: ".$order->get_id()."\n";
-    	$msg .="*Total Price*: ".strip_tags(wc_price($d['total']))."\n";
-    	$msg .="*Payment Method*: ".$order->get_payment_method_title()."\n";
+    	$msg .="*Total Price*: ".strip_tags(wc_price($d['total']))."\n\n";
+		
     	if(isset($shipping_data[$vendor_id])){
     		$msg .="*Shipping Method*: ".$shipping_data[$vendor_id]['title']." ".strip_tags(wc_price($shipping_data[$vendor_id]['total']))."\n\n";
     	}elseif(isset($shipping_data[0])){
