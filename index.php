@@ -159,14 +159,11 @@ function wfcm_wa_thankyou($title, $order) {
     	
     	$msg .="*Info del comprador*: \n";
 
-	$msg .="Name: ".$order->{"get_".$mode."_first_name"}()." ".$order->{"get_".$mode."_last_name"}()."\n";
-    	$msg .="Address: ".implode(', ',[$order->{"get_".$mode."_address_1"}(),$order->{"get_".$mode."_address_2"}()])."\n";
-    	$msg .="City: ".$order->{"get_".$mode."_city"}().", ".$province.", ".$country."\n";
-    	$msg .="Zip Code: ".$order->{"get_".$mode."_postcode"}()."\n";
-    	if($mode=='billing'){
+	if($mode=='billing'){
     		$email = (isset($order->shipping['email']))?$order->shipping['email']:$order->get_billing_email();
     		$phone = (isset($order->shipping['phone']))?$order->shipping['phone']:$order->get_billing_phone();
     	}else{
+		$name = $order->get_billing_first_name();
     		$email = $order->get_billing_email();
     		$phone = $order->get_billing_phone();
     	}
