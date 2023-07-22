@@ -143,19 +143,39 @@ function wfcm_wa_thankyou($title, $order) {
 		return $title;
 	}
 	//Loop each checkout vendors whatsapp button
+	//Loop each checkout vendors whatsapp button
 	$html ='';
 	foreach($data as $vendor_id=>$d){
-		$msg = "*Hola, me gustaría comprar esto:*\n";
-	$msg .="\n";
+		$msg = "*Hola, me gustaría comprar:*\n";
     	$msg .= $d['items']."\n";
+    	$msg .="*Order Id*: ".$order->get_id()."\n";
     	$msg .="*Total Price*: ".strip_tags(wc_price($d['total']))."\n";
+    	$msg .="*Payment Method*: ".$order->get_payment_method_title()."\n";
+    	if(isset($shipping_data[$vendor_id])){
+    		$msg .="*Shipping Method*: ".$shipping_data[$vendor_id]['title']." ".strip_tags(wc_price($shipping_data[$vendor_id]['total']))."\n\n";
+    	}elseif(isset($shipping_data[0])){
+    		$msg .="*Shipping Method*: ".$shipping_data[0]['title']." ". strip_tags(wc_price($shipping_data[0]['total']))."\n\n";
+    	}
+    	
+    	$msg .="*Shipping Info*: \n";
+    	$msg .="Name: ".$order->{"get_".$mode."_first_name"}()." ".$order->{"get_".$mode."_last_name"}()."\n";
+    	$msg .="Address: ".implode(', ',[$order->{"get_".$mode."_address_1"}(),$order->{"get_".$mode."_address_2"}()])."\n";
+    	$msg .="City: ".$order->{"get_".$mode."_city"}().", ".$province.", ".$country."\n";
+    	$msg .="Zip Code: ".$order->{"get_".$mode."_postcode"}()."\n";
+    	if($mode=='shipping'){
+    		$email = (isset($order->shipping['email']))?$order->shipping['email']:$order->get_billing_email();
+    		$phone = (isset($order->shipping['phone']))?$order->shipping['phone']:$order->get_billing_phone();
+    	}else{
+    		$email = $order->get_billing_email();
+    		$phone = $order->get_billing_phone();
+    	}
+    	$msg .="Email: ".$email."\n";
+    	$msg .="Phone Number: ".$phone."\n";
+    	$msg .= "Notes: ".$order->get_customer_note()."\n";
     	$msg .="\n";
-	$msg .="Nombre: ".$order->{"get_".$mode."_first_name"}()."
-	$msg .="Email: ".$email."\n";
-    	$msg .="Gracias!";
-
-		
-    	$btn_text ='Ir con '.$d['vendor_name'];
+    	$msg .="Thank you!\n\n";
+    	$msg .= "Server Time: ".get_post_time( 'j-F-Y - H:i', false, $order->get_id(), true );
+    	$btn_text ='Send Order by WA to: '.$d['vendor_name'];
     	$html .=  '<a id="sendbtn" href="https://api.whatsapp.com/send?phone='.$d['whatsapp'].'&text='.rawurlencode($msg).'" target="_blank" class="wa-order-thankyou">'.$btn_text.'</a><br>';
 	}
 
