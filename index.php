@@ -159,16 +159,13 @@ function wfcm_wa_thankyou($title, $order) {
     	$msg .="*Info del comprador*: \n";
     	
     	if($mode=='shipping'){
-		$name = (isset($order->shipping['name']))?$order->shipping['name']:$order->get_billing_name();
-    		$email = (isset($order->shipping['email']))?$order->shipping['email']:$order->get_billing_email();
+		$email = (isset($order->shipping['email']))?$order->shipping['email']:$order->get_billing_email();
     		$phone = (isset($order->shipping['phone']))?$order->shipping['phone']:$order->get_billing_phone();
     	}else{
-		$name = $order->get_billing_name();
-    		$email = $order->get_billing_email();
+		$email = $order->get_billing_email();
     		$phone = $order->get_billing_phone();
     	}
-	$msg .="Name: ".$name."\n";
-    	$msg .="Email: ".$email."\n";
+	$msg .="Email: ".$email."\n";
     	$msg .="Phone Number: ".$phone."\n";
     	$msg .="\n";
     	$msg .="Gracias!\n\n";
