@@ -163,7 +163,6 @@ function wfcm_wa_thankyou($title, $order) {
 		$email = (isset($order->shipping['email']))?$order->shipping['email']:$order->get_billing_email();
     		$phone = (isset($order->shipping['phone']))?$order->shipping['phone']:$order->get_billing_phone();
     	}else{
-		$name = $order->get_billing_first_name();
 		$email = $order->get_billing_email();
     		$phone = $order->get_billing_phone();
     	}
