@@ -158,7 +158,7 @@ function wfcm_wa_thankyou($title, $order) {
     		$email = $order->get_billing_email();
     		$phone = $order->get_billing_phone();
     	}
-    	$msg .="Phone: ".$phone."\n";
+    	$msg .="Phone Number: ".$phone."\n";
 	$msg .="Email: ".$email."\n";
     	$msg .="Gracias!";
 
