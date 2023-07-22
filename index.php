@@ -149,22 +149,13 @@ function wfcm_wa_thankyou($title, $order) {
 		$msg = "*Hola, me gustaría comprar:*\n\n";
     	$msg .= $d['items']."\n";
     	$msg .="*Total Price*: ".strip_tags(wc_price($d['total']))."\n\n";
-		
-    	if(isset($shipping_data[$vendor_id])){
-    		$msg .="*Shipping Method*: ".$shipping_data[$vendor_id]['title']." ".strip_tags(wc_price($shipping_data[$vendor_id]['total']))."\n\n";
-    	}elseif(isset($shipping_data[0])){
-    		$msg .="*Shipping Method*: ".$shipping_data[0]['title']." ". strip_tags(wc_price($shipping_data[0]['total']))."\n\n";
-    	}
-    	
+	
     	$msg .="*Info del comprador*: \n";
+    	$name = $order->get_billing_name();
+    	$email = $order->get_billing_email();
+    	$phone = $order->get_billing_phone();
     	
-    	if($mode=='shipping'){
-		$email = (isset($order->shipping['email']))?$order->shipping['email']:$order->get_billing_email();
-    		$phone = (isset($order->shipping['phone']))?$order->shipping['phone']:$order->get_billing_phone();
-    	}else{
-		$email = $order->get_billing_email();
-    		$phone = $order->get_billing_phone();
-    	}
+	$msg .="Name: ".$name."\n";
 	$msg .="Email: ".$email."\n";
     	$msg .="Phone Number: ".$phone."\n";
     	$msg .="\n";
