@@ -142,7 +142,8 @@ function wfcm_wa_thankyou($title, $order) {
 	if(empty($data)){
 		return $title;
 	}
-	//Loop each checkout vendors whatsapp button
+
+
 	//Loop each checkout vendors whatsapp button
 	$html ='';
 	foreach($data as $vendor_id=>$d){
@@ -157,7 +158,8 @@ function wfcm_wa_thankyou($title, $order) {
     	}
     	
     	$msg .="*Info del comprador*: \n";
-    	
+		
+    	$msg .="Name: ".$order->{"get_".$mode."_billing_name"}()."\n";
     	if($mode=='shipping'){
 		$email = (isset($order->shipping['email']))?$order->shipping['email']:$order->get_billing_email();
     		$phone = (isset($order->shipping['phone']))?$order->shipping['phone']:$order->get_billing_phone();
