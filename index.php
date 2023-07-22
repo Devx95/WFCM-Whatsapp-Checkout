@@ -169,8 +169,8 @@ function wfcm_wa_thankyou($title, $order) {
     	}
 		
 	$msg .="Name: ".$name."\n";
+	$msg .="Phone Number: ".$phone."\n";
 	$msg .="Email: ".$email."\n";
-    	$msg .="Phone Number: ".$phone."\n";
     	$msg .="\n";
     	$msg .="Gracias!\n\n";
     	
