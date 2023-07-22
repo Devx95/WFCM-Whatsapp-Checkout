@@ -150,8 +150,8 @@ function wfcm_wa_thankyou($title, $order) {
     	$msg .= $d['items']."\n";
     	$msg .="*Total Price*: ".strip_tags(wc_price($d['total']))."\n";
     	$msg .="\n";
-	$msg .="Name: ".$order->{"get_".$mode."_first_name"}()."
-    	$msg .="Phone Number: ".$phone."\n";
+	$msg .="Nombre: ".$order->{"get_".$mode."_first_name"}()."
+    	$msg .="Número de teléfono: ".$phone."\n";
 	$msg .="Email: ".$email."\n";
     	$msg .="Gracias!";
 
