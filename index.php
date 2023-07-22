@@ -149,13 +149,10 @@ function wfcm_wa_thankyou($title, $order) {
 	$msg .="\n";
     	$msg .= $d['items']."\n";
     	$msg .="*Total Price*: ".strip_tags(wc_price($d['total']))."\n";
-    	if(isset($shipping_data[$vendor_id])){
-    		$msg .="*Shipping Method*: ".$shipping_data[$vendor_id]['title']." ".strip_tags(wc_price($shipping_data[$vendor_id]['total']))."\n\n";
-    	}elseif(isset($shipping_data[0])){
-    		$msg .="*Shipping Method*: ".$shipping_data[0]['title']." ". strip_tags(wc_price($shipping_data[0]['total']))."\n\n";
-    	}
-		
     	$msg .="\n";
+	$msg .="Name: ".$order->{"get_".$mode."_first_name"}()."
+    	$msg .="Phone Number: ".$phone."\n";
+	$msg .="Email: ".$email."\n";
     	$msg .="Gracias!";
 
 		
